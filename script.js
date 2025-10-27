@@ -1,6 +1,6 @@
 const credentials = {
   username: "admin",
-  password: "123456",
+  password: "12345",
 };
 
 const state = {
@@ -35,6 +35,7 @@ const state = {
     },
   ],
   editTarget: null,
+  search: "",
 };
 
 const loginForm = document.querySelector("#login-form");
@@ -42,6 +43,7 @@ const loginView = document.querySelector("#login-view");
 const dashboardView = document.querySelector("#dashboard-view");
 const loginError = document.querySelector("#login-error");
 const logoutBtn = document.querySelector("#logout-btn");
+const searchInput = document.querySelector(".search-input");
 
 const totalStudentsEl = document.querySelector("#total-students");
 const averageAgeEl = document.querySelector("#average-age");
@@ -77,8 +79,16 @@ loginForm.addEventListener("submit", (event) => {
 });
 
 logoutBtn.addEventListener("click", () => {
-  dashboardView.hidden = true;
-  loginView.hidden = false;
+  showLogin();
+});
+
+searchInput?.addEventListener("input", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLInputElement)) {
+    return;
+  }
+  state.search = target.value.trim();
+  renderStudents();
 });
 
 addStudentBtn.addEventListener("click", () => {
@@ -168,20 +178,39 @@ cancelStudentBtn.addEventListener("click", () => {
   studentDialog.close();
 });
 
+function showLogin() {
+  loginView.hidden = false;
+  dashboardView.hidden = true;
+  document.body.dataset.view = "login";
+}
+
 function showDashboard() {
   loginView.hidden = true;
   dashboardView.hidden = false;
+  document.body.dataset.view = "dashboard";
   renderStudents();
   updateDashboardStats();
 }
 
 function renderStudents() {
-  if (state.students.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#6b7280;padding:2rem;">暂无学生信息，请点击“新增学生”添加数据。</td></tr>`;
+  const filtered = state.students.filter((student) => {
+    if (!state.search) {
+      return true;
+    }
+    const query = state.search.toLowerCase();
+    return (
+      student.name.toLowerCase().includes(query) ||
+      student.id.toLowerCase().includes(query)
+    );
+  });
+
+  if (filtered.length === 0) {
+    tableBody.innerHTML =
+      '<tr><td colspan="6" class="empty-row">暂无符合条件的学生，请调整搜索条件。</td></tr>';
     return;
   }
 
-  const rows = state.students
+  const rows = filtered
     .map(
       (student) => `
       <tr>
@@ -239,3 +268,5 @@ function openStudentDialog(student) {
     alert("当前浏览器不支持对话框组件，请升级浏览器。");
   }
 }
+
+showLogin();
