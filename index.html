@@ -12,95 +12,147 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body data-view="login">
     <div class="app">
-      <section id="login-view" class="card login-card">
-        <div class="login-brand">
-          <div class="logo">SMS</div>
-          <h1>学生管理系统</h1>
-          <p>欢迎使用，请先登录账号</p>
+      <section id="login-view" class="login-view">
+        <div class="login-panel">
+          <div class="login-panel__header">
+            <div class="logo">SMS</div>
+            <h1>欢迎回来</h1>
+            <p>学生管理系统后台</p>
+          </div>
+          <form id="login-form" class="login-form" autocomplete="on">
+            <label class="input-group">
+              <span>账号</span>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                placeholder="请输入账号"
+                autocomplete="username"
+                required
+              />
+            </label>
+            <label class="input-group">
+              <span>密码</span>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="请输入密码"
+                autocomplete="current-password"
+                required
+              />
+            </label>
+            <button type="submit" class="btn primary">登入系统</button>
+            <p class="hint">默认账号：admin / 默认密码：12345</p>
+            <p id="login-error" class="error-message" aria-live="polite"></p>
+          </form>
         </div>
-        <form id="login-form" class="login-form">
-          <label for="username">账号</label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            placeholder="请输入账号"
-            autocomplete="username"
-            required
-          />
-
-          <label for="password">密码</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="请输入密码"
-            autocomplete="current-password"
-            required
-          />
-
-          <button type="submit" class="btn primary">登入</button>
-          <p class="hint">默认账号：admin&nbsp;&nbsp;默认密码：12345</p>
-          <p id="login-error" class="error-message" aria-live="polite"></p>
-        </form>
+        <div class="login-hero" aria-hidden="true">
+          <div class="login-hero__content">
+            <h2>集中管理学生数据</h2>
+            <p>
+              查看全校学生信息、班级分布与学情分析。支持快速新增、编辑与删除学生档案，让日常管理井井有条。
+            </p>
+            <ul class="login-hero__list">
+              <li>📊 实时统计数据概览</li>
+              <li>🧾 清晰的学生信息表格</li>
+              <li>🔒 登录后安全访问</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <section id="dashboard-view" class="dashboard" hidden>
-        <header class="topbar">
-          <div>
-            <h1>学生管理系统</h1>
-            <p>欢迎回来，管理员</p>
+        <aside class="sidebar">
+          <div class="sidebar__brand">
+            <div class="logo small">SMS</div>
+            <div>
+              <h1>学生管理系统</h1>
+              <p>管理员中心</p>
+            </div>
           </div>
-          <button id="logout-btn" class="btn ghost">退出登录</button>
-        </header>
+          <nav class="sidebar__nav">
+            <button class="nav-item active" type="button">学生概览</button>
+            <button class="nav-item" type="button">班级管理</button>
+            <button class="nav-item" type="button">统计分析</button>
+          </nav>
+          <div class="sidebar__footer">
+            <button id="logout-btn" class="btn ghost">退出登录</button>
+          </div>
+        </aside>
 
-        <div class="stats-grid">
-          <article class="stat-card">
+        <main class="dashboard__main">
+          <header class="topbar">
             <div>
-              <p class="stat-label">总学生数量</p>
-              <p id="total-students" class="stat-value">0</p>
+              <h2>今日总览</h2>
+              <p>欢迎回来，管理员。以下是系统的最新情况。</p>
             </div>
-            <span class="stat-icon">👩‍🎓</span>
-          </article>
-          <article class="stat-card">
-            <div>
-              <p class="stat-label">平均年龄</p>
-              <p id="average-age" class="stat-value">0</p>
+            <div class="topbar__actions">
+              <button class="btn ghost" type="button">导出报表</button>
+              <button id="add-student-btn" class="btn primary" type="button">
+                新增学生
+              </button>
             </div>
-            <span class="stat-icon">📊</span>
-          </article>
-          <article class="stat-card">
-            <div>
-              <p class="stat-label">班级数量</p>
-              <p id="class-count" class="stat-value">0</p>
-            </div>
-            <span class="stat-icon">🏫</span>
-          </article>
-        </div>
+          </header>
 
-        <section class="card">
-          <div class="card-header">
-            <h2>学生列表</h2>
-            <button id="add-student-btn" class="btn primary">新增学生</button>
+          <div class="stats-grid">
+            <article class="stat-card">
+              <div>
+                <p class="stat-label">总学生数量</p>
+                <p id="total-students" class="stat-value">0</p>
+              </div>
+              <span class="stat-icon">👩‍🎓</span>
+            </article>
+            <article class="stat-card">
+              <div>
+                <p class="stat-label">平均年龄</p>
+                <p id="average-age" class="stat-value">0</p>
+              </div>
+              <span class="stat-icon">📊</span>
+            </article>
+            <article class="stat-card">
+              <div>
+                <p class="stat-label">班级数量</p>
+                <p id="class-count" class="stat-value">0</p>
+              </div>
+              <span class="stat-icon">🏫</span>
+            </article>
           </div>
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>学号</th>
-                  <th>姓名</th>
-                  <th>班级</th>
-                  <th>年龄</th>
-                  <th>联系方式</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody id="student-table-body"></tbody>
-            </table>
-          </div>
-        </section>
+
+          <section class="card list-card">
+            <div class="card-header">
+              <div>
+                <h3>学生列表</h3>
+                <p class="card-subtitle">管理全校学生基本信息</p>
+              </div>
+              <div class="list-actions">
+                <input
+                  type="search"
+                  placeholder="搜索姓名或学号"
+                  class="search-input"
+                  aria-label="搜索学生"
+                />
+              </div>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">学号</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">班级</th>
+                    <th scope="col">年龄</th>
+                    <th scope="col">联系方式</th>
+                    <th scope="col" class="actions-col">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="student-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
       </section>
 
       <dialog id="student-dialog">
@@ -136,12 +188,7 @@
             </label>
           </div>
           <div class="dialog-actions">
-            <button
-              id="cancel-student"
-              type="button"
-              value="cancel"
-              class="btn ghost"
-            >
+            <button id="cancel-student" type="button" value="cancel" class="btn ghost">
               取消
             </button>
             <button id="save-student" value="confirm" class="btn primary">
