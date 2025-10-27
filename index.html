@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>学生管理系统</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <section id="login-view" class="card login-card">
+        <div class="login-brand">
+          <div class="logo">SMS</div>
+          <h1>学生管理系统</h1>
+          <p>欢迎使用，请先登录账号</p>
+        </div>
+        <form id="login-form" class="login-form">
+          <label for="username">账号</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="请输入账号"
+            autocomplete="username"
+            required
+          />
+
+          <label for="password">密码</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="请输入密码"
+            autocomplete="current-password"
+            required
+          />
+
+          <button type="submit" class="btn primary">登入</button>
+          <p class="hint">默认账号：admin&nbsp;&nbsp;默认密码：123456</p>
+          <p id="login-error" class="error-message" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="dashboard-view" class="dashboard" hidden>
+        <header class="topbar">
+          <div>
+            <h1>学生管理系统</h1>
+            <p>欢迎回来，管理员</p>
+          </div>
+          <button id="logout-btn" class="btn ghost">退出登录</button>
+        </header>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div>
+              <p class="stat-label">总学生数量</p>
+              <p id="total-students" class="stat-value">0</p>
+            </div>
+            <span class="stat-icon">👩‍🎓</span>
+          </article>
+          <article class="stat-card">
+            <div>
+              <p class="stat-label">平均年龄</p>
+              <p id="average-age" class="stat-value">0</p>
+            </div>
+            <span class="stat-icon">📊</span>
+          </article>
+          <article class="stat-card">
+            <div>
+              <p class="stat-label">班级数量</p>
+              <p id="class-count" class="stat-value">0</p>
+            </div>
+            <span class="stat-icon">🏫</span>
+          </article>
+        </div>
+
+        <section class="card">
+          <div class="card-header">
+            <h2>学生列表</h2>
+            <button id="add-student-btn" class="btn primary">新增学生</button>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>学号</th>
+                  <th>姓名</th>
+                  <th>班级</th>
+                  <th>年龄</th>
+                  <th>联系方式</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="student-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <dialog id="student-dialog">
+        <form method="dialog" id="student-form" class="dialog-card">
+          <h3 id="dialog-title">新增学生</h3>
+          <div class="dialog-grid">
+            <label>
+              学号
+              <input id="student-id" name="id" type="text" required />
+            </label>
+            <label>
+              姓名
+              <input id="student-name" name="name" type="text" required />
+            </label>
+            <label>
+              班级
+              <input id="student-class" name="group" type="text" required />
+            </label>
+            <label>
+              年龄
+              <input
+                id="student-age"
+                name="age"
+                type="number"
+                min="3"
+                max="100"
+                required
+              />
+            </label>
+            <label>
+              联系方式
+              <input id="student-phone" name="phone" type="tel" required />
+            </label>
+          </div>
+          <div class="dialog-actions">
+            <button
+              id="cancel-student"
+              type="button"
+              value="cancel"
+              class="btn ghost"
+            >
+              取消
+            </button>
+            <button id="save-student" value="confirm" class="btn primary">
+              保存
+            </button>
+          </div>
+        </form>
+      </dialog>
+    </div>
+    <script src="script.js" type="module"></script>
+  </body>
+</html>
